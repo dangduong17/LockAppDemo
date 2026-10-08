@@ -1,5 +1,6 @@
 package com.example.alldemo.ui.navigation
 
+import android.app.Application
 import android.content.Intent
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
@@ -15,14 +16,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.alldemo.activity.SampleDemoActivity
 import com.example.alldemo.features.androidnativespeechrecognizer.AndroidNativeSpeechRecognizerDemoScreen
 import com.example.alldemo.features.cloudwhisperdemo.CloudWhisperDemoScreen
 import com.example.alldemo.features.deepgramnova2apiwebsocket.ui.DeepgramNova2DemoScreen
 import com.example.alldemo.features.demovoicespeechrecognizer.ui.VoiceSpeechDemoScreen
 import com.example.alldemo.features.futovoiceinputengine.VoicePasswordScreen
+import com.example.alldemo.features.huggingfacetransformersjsonnxwebruntime.VoicePasswordViewModel
+import com.example.alldemo.features.huggingfacetransformersjsonnxwebruntime.VoicePasswordViewModelFactory
+import com.example.alldemo.features.huggingfacetransformersjsonnxwebruntime.ui.VoicePasswordScreen as HuggingFaceVoicePasswordScreen
 import com.example.alldemo.features.lockscreentestapp.ui.LockscreenDemoScreen
 import com.example.alldemo.features.locktestapp.ui.applist.LockTestDemoScreen
+import com.example.alldemo.features.revaiassemblyaistreamingwebsocketapi.ui.RevAiAssemblyAiDemoScreen
 import com.example.alldemo.features.voskdemooo.VoskDemoScreen
 import com.example.alldemo.features.wakewordvoiceprint.ui.navigation.WakewordVoiceprintMainScreen
 import com.example.alldemo.ui.DemoLauncherViewModel
@@ -39,6 +45,8 @@ sealed class AppDestination(val route: String) {
     data object WakewordVoiceprint : AppDestination("wakewordvoiceprint_demo")
     data object FUTOVoiceInputEngine : AppDestination("futovoiceinputengine_demo")
     data object DeepgramNova2APIWebSocket : AppDestination("deepgramnova2apiwebsocket_demo")
+    data object RevAiAssemblyAiStreamingWebSocket : AppDestination("revaiassemblyaistreamingwebsocketapi_demo")
+    data object HuggingFaceTransformersjsONNXWebRuntime : AppDestination("huggingfacetransformersjsonnxwebruntime_demo")
 }
 
 @Composable
@@ -95,6 +103,8 @@ fun AppNavigation(
                                 AppDestination.WakewordVoiceprint.route -> AppDestination.WakewordVoiceprint
                                 AppDestination.FUTOVoiceInputEngine.route -> AppDestination.FUTOVoiceInputEngine
                                 AppDestination.DeepgramNova2APIWebSocket.route -> AppDestination.DeepgramNova2APIWebSocket
+                                AppDestination.RevAiAssemblyAiStreamingWebSocket.route -> AppDestination.RevAiAssemblyAiStreamingWebSocket
+                                AppDestination.HuggingFaceTransformersjsONNXWebRuntime.route -> AppDestination.HuggingFaceTransformersjsONNXWebRuntime
                                 else -> AppDestination.Dashboard
                             }
                             if (targetDestination != AppDestination.Dashboard) {
@@ -171,6 +181,26 @@ fun AppNavigation(
 
             is AppDestination.DeepgramNova2APIWebSocket -> {
                 DeepgramNova2DemoScreen(
+                    onBackClick = {
+                        if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
+                    }
+                )
+            }
+
+            is AppDestination.RevAiAssemblyAiStreamingWebSocket -> {
+                RevAiAssemblyAiDemoScreen(
+                    onBackClick = {
+                        if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
+                    }
+                )
+            }
+
+            is AppDestination.HuggingFaceTransformersjsONNXWebRuntime -> {
+                val voicePasswordViewModel: VoicePasswordViewModel = viewModel(
+                    factory = VoicePasswordViewModelFactory(LocalContext.current.applicationContext as Application)
+                )
+                HuggingFaceVoicePasswordScreen(
+                    viewModel = voicePasswordViewModel,
                     onBackClick = {
                         if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
                     }

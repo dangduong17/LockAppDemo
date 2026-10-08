@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hugging Face Transformers.js STT Engine</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 16px;
+        }
+        #status-container {
+            padding: 8px 12px;
+            border-radius: 8px;
+            background-color: #1e1e1e;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div id="status-container">
+        <strong>Status:</strong> <span id="status">INITIALIZING</span>
+    </div>
+
+    <script type="module">
+        import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
+
+        // Configure env for ONNX Web Runtime execution in WebView
+        env.allowLocalModels = false;
+        env.useBrowserCache = true;
+
+        let transcriber = null;
+
+        function getBridge() {
+            return window.AndroidBridge || window.AndroidJSBridge || null;
+        }
+
+        function notifyStatus(status) {
+            const statusElem = document.getElementById('status');
+            if (statusElem) {
+                statusElem.innerText = status;
+            }
+            const bridge = getBridge();
+            if (bridge && bridge.onStatusChange) {
+                bridge.onStatusChange(status);
+            }
+        }
+
+        function notifyError(errorMessage) {
+            const statusElem = document.getElementById('status');
+            if (statusElem) {
+                statusElem.innerText = "ERROR: " + errorMessage;
+            }
+            const bridge = getBridge();
+            if (bridge && bridge.onError) {
+                bridge.onError(errorMessage);
+            }
+        }
+
+        async function initPipeline() {
+            try {
+                notifyStatus("LOADING_MODEL");
+                // Initialize automatic speech recognition model (Xenova/whisper-tiny)
+                transcriber = await pipeline('automatic-speech-recognition', 'Xenova/whisper-tiny', {
+                    quantized: true
+                });
+                notifyStatus("READY");
+                const bridge = getBridge();
+                if (bridge && bridge.onModelLoaded) {
+                    bridge.onModelLoaded();
+                }
+            } catch (err) {
+                console.error("Failed to initialize Transformers.js pipeline:", err);
+                notifyError(err.message || "Failed to initialize pipeline");
+            }
+        }
+
+        async function decodeAudioBuffer(base64Audio) {
+            const binaryString = atob(base64Audio);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+                const audioBuffer = await audioCtx.decodeAudioData(bytes.buffer.slice(0));
+                return audioBuffer.getChannelData(0);
+            } catch (e) {
+                // Fallback: parse raw 16-bit mono PCM bytes to Float32Array [-1.0, 1.0]
+                const int16Array = new Int16Array(bytes.buffer, bytes.byteOffset, Math.floor(bytes.length / 2));
+                const float32Array = new Float32Array(int16Array.length);
+                for (let i = 0; i < int16Array.length; i++) {
+                    float32Array[i] = int16Array[i] / 32768.0;
+                }
+                return float32Array;
+            }
+        }
+
+        window.processAudioData = async function(base64Audio, selectedLanguage = 'auto') {
+            if (!transcriber) {
+                notifyError("Model not loaded yet");
+                return;
+            }
+
+            try {
+                notifyStatus("PROCESSING");
+                const float32Audio = await decodeAudioBuffer(base64Audio);
+                const options = (selectedLanguage && selectedLanguage !== 'auto')
+                    ? { language: selectedLanguage, task: 'transcribe' }
+                    : { task: 'transcribe' };
+                const result = await transcriber(float32Audio, options);
+                const recognizedText = result.text ? result.text.trim() : (Array.isArray(result) ? result.map(r => r.text).join(' ').trim() : '');
+
+                notifyStatus("READY");
+                const bridge = getBridge();
+                if (bridge && bridge.onSpeechResult) {
+                    bridge.onSpeechResult(recognizedText, true);
+                }
+            } catch (err) {
+                console.error("Speech recognition error:", err);
+                notifyError("Inference error: " + (err.message || err));
+            }
+        };
+
+        window.processFloatAudio = async function(pcmData, selectedLanguage = 'auto') {
+            if (!transcriber) {
+                notifyError("Model not loaded yet");
+                return;
+            }
+
+            try {
+                notifyStatus("PROCESSING");
+                const float32Audio = new Float32Array(pcmData);
+                const options = (selectedLanguage && selectedLanguage !== 'auto')
+                    ? { language: selectedLanguage, task: 'transcribe' }
+                    : { task: 'transcribe' };
+                const result = await transcriber(float32Audio, options);
+                const recognizedText = result.text ? result.text.trim() : (Array.isArray(result) ? result.map(r => r.text).join(' ').trim() : '');
+
+                notifyStatus("READY");
+                const bridge = getBridge();
+                if (bridge && bridge.onSpeechResult) {
+                    bridge.onSpeechResult(recognizedText, true);
+                }
+            } catch (err) {
+                console.error("Speech recognition error:", err);
+                notifyError("Inference error: " + (err.message || err));
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', initPipeline);
+    </script>
+</body>
+</html>

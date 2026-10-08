@@ -110,6 +110,26 @@ class FeatureRegistryRepositoryImpl : FeatureRegistryRepository {
             color = Color(0xFF9333EA),
             destination = "deepgramnova2apiwebsocket_demo",
             tags = listOf("Deepgram", "Nova2", "WebSocket", "Realtime", "Streaming")
+        ),
+        DemoItem(
+            id = "revaiassemblyaistreamingwebsocketapi_demo",
+            title = "RevAI & AssemblyAI Streaming WebSocket",
+            description = "Real-time streaming speech recognition via Rev AI & AssemblyAI WebSocket APIs.",
+            category = DemoCategory.UI_COMPONENTS,
+            icon = Icons.Rounded.GraphicEq,
+            color = Color(0xFF2563EB),
+            destination = "revaiassemblyaistreamingwebsocketapi_demo",
+            tags = listOf("RevAI", "AssemblyAI", "WebSocket", "Realtime", "Streaming")
+        ),
+        DemoItem(
+            id = "huggingfacetransformersjsonnxwebruntime_demo",
+            title = "Hugging Face Transformers.js ONNX Web Runtime",
+            description = "On-device Whisper STT engine running in WebView via Hugging Face Transformers.js and ONNX Web Runtime.",
+            category = DemoCategory.UI_COMPONENTS,
+            icon = Icons.Rounded.RecordVoiceOver,
+            color = Color(0xFFE11D48),
+            destination = "huggingfacetransformersjsonnxwebruntime_demo",
+            tags = listOf("HuggingFace", "Transformers.js", "ONNX", "WebView", "Whisper")
         )
     )
 

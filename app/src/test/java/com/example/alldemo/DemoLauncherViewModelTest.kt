@@ -43,7 +43,7 @@ class DemoLauncherViewModelTest {
         val state = viewModel.uiState.value
         assertEquals(DemoCategory.ALL, state.selectedCategory)
         assertEquals("", state.searchQuery)
-        assertEquals(9, state.demoItems.size)
+        assertEquals(11, state.demoItems.size)
         assertEquals(DemoCategory.entries.size, state.categories.size)
     }
 
@@ -105,6 +105,6 @@ class DemoLauncherViewModelTest {
 
         viewModel.clearSearchQuery()
         assertEquals("", viewModel.uiState.value.searchQuery)
-        assertEquals(9, viewModel.uiState.value.demoItems.size)
+        assertEquals(11, viewModel.uiState.value.demoItems.size)
     }
 }

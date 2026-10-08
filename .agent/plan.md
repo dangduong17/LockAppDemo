@@ -1,31 +1,53 @@
 # Project Plan
 
-Tích hợp 3 project mới vào AllDemo Hub: WakewordVoiceprint (tại E:\AndroidStudioCode\WakewordVoiceprint), FUTOVoiceInputEngine (tại E:\AndroidStudioCode\FUTOVoiceInputEngine) và DeepgramNova2APIWebSocket (tại E:\AndroidStudioCode\DeepgramNova2APIWebSocket). Đọc mã nguồn các project, đặt tên package khớp chính xác tên project (com.example.alldemo.features.wakewordvoiceprint, com.example.alldemo.features.futovoiceinputengine, com.example.alldemo.features.deepgramnova2apiwebsocket), tạo 3 nút/thẻ điều hướng tương ứng trên màn hình chính AllDemo Hub.
+Tích hợp 2 project mới vào AllDemo Hub: RevAIAssemblyAIStreamingWebSocketAPI (tại E:\AndroidStudioCode\RevAIAssemblyAIStreamingWebSocketAPI) và HuggingFaceTransformersjsONNXWebRuntime (tại E:\AndroidStudioCode\HuggingFaceTransformersjsONNXWebRuntime). Đọc mã nguồn các project, đặt tên package khớp chính xác tên project (com.example.alldemo.features.revaiassemblyaistreamingwebsocketapi, com.example.alldemo.features.huggingfacetransformersjsonnxwebruntime), tạo 2 nút/thẻ điều hướng tương ứng trên màn hình chính AllDemo Hub.
 
 ## Project Brief
 
-# Project Brief: AllDemo Hub Integration
+# Project Brief: Tích hợp Module AllDemo Hub
 
-## Tính năng chính (Features)
-1. **Màn hình trung tâm AllDemo Hub**: Màn hình chính chứa 3 thẻ/nút điều hướng trực quan, cho phép chuyển đổi mượt mà giữa các mô-đun tính năng tích hợp.
-2. **Mô-đun Wakeword & Voiceprint** (`com.example.alldemo.features.wakewordvoiceprint`): Tích hợp khả năng phát hiện từ kích hoạt (wakeword) và xác thực dấu vân giọng nói (voiceprint).
-3. **Mô-đun FUTO Voice Input Engine** (`com.example.alldemo.features.futovoiceinputengine`): Tích hợp bộ máy nhận dạng và nhập liệu giọng nói offline từ FUTO Voice Input Engine.
-4. **Mô-đun Deepgram Nova-2 API WebSocket** (`com.example.alldemo.features.deepgramnova2apiwebsocket`): Tích hợp truyền phát âm thanh thời gian thực (Real-time Speech-to-Text) qua kết nối WebSocket với Deepgram Nova-2 API.
+## Mô tả Dự án (Project Overview)
+Dự án nhằm hợp nhất hai module tính năng mới vào ứng dụng **AllDemo Hub**:
+1. **RevAIAssemblyAIStreamingWebSocketAPI**: Xử lý nhận diện giọng nói theo thời gian thực qua giao thức WebSocket với Rev AI và AssemblyAI APIs.
+2. **HuggingFaceTransformersjsONNXWebRuntime**: Chạy các mô hình AI/ML trên thiết bị (On-device) bằng HuggingFace Transformers.js và ONNX Web Runtime.
 
-## Kiến trúc & Công nghệ (High-Level Tech Stack)
+Mã nguồn được tích hợp vào ứng dụng AllDemo Hub theo đúng cấu trúc package quy định (`com.example.alldemo.features.revaiassemblyaistreamingwebsocketapi` và `com.example.alldemo.features.huggingfacetransformersjsonnxwebruntime`), đi kèm với các thẻ điều hướng tương ứng trên màn hình chính.
+
+---
+
+## Các tính năng chính (Features)
+
+1. **Màn hình điều hướng trung tâm AllDemo Hub (Hub Dashboard & Navigation)**
+   - Hiển thị danh sách các module dưới dạng các thẻ (Cards)/nút điều hướng chuẩn Material Design 3.
+   - Cho phép người dùng chuyển đổi linh hoạt giữa các tính năng thử nghiệm.
+
+2. **Module Rev AI & AssemblyAI Streaming WebSocket**
+   - Thu âm micro và truyền luồng dữ liệu âm thanh (audio streaming) liên tục qua WebSocket.
+   - Xử lý và hiển thị kết quả chuyển đổi giọng nói thành văn bản (Speech-to-Text) theo thời gian thực từ Rev AI và AssemblyAI.
+
+3. **Module Hugging Face Transformers.js ONNX Web Runtime**
+   - Thực thi các mô hình AI/ML trực tiếp trên ứng dụng thông qua môi trường Web Runtime tích hợp ONNX Runtime & Transformers.js.
+   - Tương tác dữ liệu hai chiều mượt mà giữa giao diện Jetpack Compose và môi trường chạy mô hình AI.
+
+4. **Quản lý kết nối & Trạng thái thời gian thực (Real-time State Management)**
+   - Quản lý vòng đời kết nối WebSocket (kết nối, ngắt kết nối, tự động xử lý lỗi mạng).
+   - Phản hồi trạng thái xử lý và kết quả lên giao diện người dùng dựa trên Kotlin State & Flow.
+
+---
+
+## Công nghệ & Kiến trúc (High-Level Technical Stack)
+
 - **Ngôn ngữ lập trình**: Kotlin
-- **Giao diện người dùng**: Jetpack Compose & Material Design 3
+- **Giao diện người dùng (UI)**: Jetpack Compose, Material Design 3
 - **Điều hướng (Navigation)**: **Jetpack Navigation 3** (State-driven navigation)
-- **Thích ứng màn hình (Adaptive Layout)**: **Compose Material Adaptive**
-- **Xử lý bất đồng bộ & Luồng dữ liệu**: Kotlin Coroutines & StateFlow
-- **Giao tiếp mạng**: OkHttp (cho kết nối WebSocket thời gian thực tới Deepgram Nova-2)
-- **Cấu trúc Package chính**:
-  - `com.example.alldemo.features.wakewordvoiceprint`
-  - `com.example.alldemo.features.futovoiceinputengine`
-  - `com.example.alldemo.features.deepgramnova2apiwebsocket`
+- **Giao diện thích ứng (Adaptive Layout)**: **Compose Material Adaptive** (`androidx.compose.material3.adaptive`)
+- **Bất đồng bộ & Luồng dữ liệu**: Kotlin Coroutines & Flow
+- **Mạng & Truyền dữ liệu thời gian thực**: OkHttp WebSocket Client
+- **Môi trường chạy mô hình AI**: Android WebKit WebView / JavaScript Interface cho ONNX Web Runtime & Transformers.js
+- **Mô hình kiến trúc**: Unidirectional Data Flow (UDF) với ViewModel và Compose State Management
 
 ## Implementation Steps
-**Total Duration:** 1h 25m 26s
+**Total Duration:** 1h 40m 27s
 
 ### Task_1_SetupRegistryAndViewModel: Define the Demo Registry data model, repository, ViewModel with StateFlow, search/filter business logic, and sample demo entries.
 - **Status:** COMPLETED
@@ -149,4 +171,23 @@ Tích hợp 3 project mới vào AllDemo Hub: WakewordVoiceprint (tại E:\Andro
   - make sure all existing tests pass
   - All 3 new voice/speech feature modules launch and function without errors
 - **Duration:** 2m 13s
+
+### Task_14_IntegrateRevAIAndHuggingFaceProjects: Integrate RevAIAssemblyAIStreamingWebSocketAPI (E:\AndroidStudioCode\RevAIAssemblyAIStreamingWebSocketAPI) and HuggingFaceTransformersjsONNXWebRuntime (E:\AndroidStudioCode\HuggingFaceTransformersjsONNXWebRuntime) into packages com.example.alldemo.features.revaiassemblyaistreamingwebsocketapi and com.example.alldemo.features.huggingfacetransformersjsonnxwebruntime. Register 1 button per project in FeatureRegistry, update AndroidManifest and build dependencies, and wire AppNavigation.
+- **Status:** COMPLETED
+- **Updates:** Successfully integrated RevAIAssemblyAIStreamingWebSocketAPI (com.example.alldemo.features.revaiassemblyaistreamingwebsocketapi) and HuggingFaceTransformersjsONNXWebRuntime (com.example.alldemo.features.huggingfacetransformersjsonnxwebruntime). Copied assets, registered 2 feature cards in FeatureRegistryRepositoryImpl, connected routes in AppNavigation, verified AndroidManifest permissions, and verified build assembleDebug and unit tests (10/10 passed).
+- **Acceptance Criteria:**
+  - Code ported into com.example.alldemo.features.revaiassemblyaistreamingwebsocketapi and com.example.alldemo.features.huggingfacetransformersjsonnxwebruntime
+  - 1 button/card per project registered in FeatureRegistry and wired in AppNavigation
+  - Dependencies, manifest permissions, and assets updated as required
+- **Duration:** 11m 55s
+
+### Task_15_RunAndVerifyRevAIAndHuggingFaceIntegrations: Build and run the app, instruct critic_agent to verify application stability (no crashes), confirm alignment with user requirements for RevAIAssemblyAIStreamingWebSocketAPI and HuggingFaceTransformersjsONNXWebRuntime integrations, and report critical UI issues.
+- **Status:** COMPLETED
+- **Updates:** Verified Task 15. App built and installed on target device. RevAI & AssemblyAI Streaming WebSocket and Hugging Face Transformers.js ONNX Web Runtime feature cards rendered on dashboard and navigate cleanly. Zero crashes in logcat. All unit tests passed.
+- **Acceptance Criteria:**
+  - build pass
+  - app does not crash
+  - make sure all existing tests pass
+  - Both new feature modules (RevAI & HuggingFace ONNX) launch and function without errors
+- **Duration:** 3m 6s
 
