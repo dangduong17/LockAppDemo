@@ -23,12 +23,14 @@ import com.example.alldemo.features.cloudwhisperdemo.CloudWhisperDemoScreen
 import com.example.alldemo.features.deepgramnova2apiwebsocket.ui.DeepgramNova2DemoScreen
 import com.example.alldemo.features.demovoicespeechrecognizer.ui.VoiceSpeechDemoScreen
 import com.example.alldemo.features.futovoiceinputengine.VoicePasswordScreen
+import com.example.alldemo.features.geminimultimodallivevoiceapi.GeminiMultimodalLiveVoiceDemoScreen
 import com.example.alldemo.features.huggingfacetransformersjsonnxwebruntime.VoicePasswordViewModel
 import com.example.alldemo.features.huggingfacetransformersjsonnxwebruntime.VoicePasswordViewModelFactory
 import com.example.alldemo.features.huggingfacetransformersjsonnxwebruntime.ui.VoicePasswordScreen as HuggingFaceVoicePasswordScreen
 import com.example.alldemo.features.lockscreentestapp.ui.LockscreenDemoScreen
 import com.example.alldemo.features.locktestapp.ui.applist.LockTestDemoScreen
 import com.example.alldemo.features.revaiassemblyaistreamingwebsocketapi.ui.RevAiAssemblyAiDemoScreen
+import com.example.alldemo.features.speechbraintest.SpeechBrainTestDemoScreen
 import com.example.alldemo.features.voskdemooo.VoskDemoScreen
 import com.example.alldemo.features.wakewordvoiceprint.ui.navigation.WakewordVoiceprintMainScreen
 import com.example.alldemo.ui.DemoLauncherViewModel
@@ -47,6 +49,8 @@ sealed class AppDestination(val route: String) {
     data object DeepgramNova2APIWebSocket : AppDestination("deepgramnova2apiwebsocket_demo")
     data object RevAiAssemblyAiStreamingWebSocket : AppDestination("revaiassemblyaistreamingwebsocketapi_demo")
     data object HuggingFaceTransformersjsONNXWebRuntime : AppDestination("huggingfacetransformersjsonnxwebruntime_demo")
+    data object SpeechBrainTest : AppDestination("speechbraintest_demo")
+    data object GeminiMultimodalLiveVoiceAPI : AppDestination("geminimultimodallivevoiceapi_demo")
 }
 
 @Composable
@@ -105,6 +109,8 @@ fun AppNavigation(
                                 AppDestination.DeepgramNova2APIWebSocket.route -> AppDestination.DeepgramNova2APIWebSocket
                                 AppDestination.RevAiAssemblyAiStreamingWebSocket.route -> AppDestination.RevAiAssemblyAiStreamingWebSocket
                                 AppDestination.HuggingFaceTransformersjsONNXWebRuntime.route -> AppDestination.HuggingFaceTransformersjsONNXWebRuntime
+                                AppDestination.SpeechBrainTest.route -> AppDestination.SpeechBrainTest
+                                AppDestination.GeminiMultimodalLiveVoiceAPI.route -> AppDestination.GeminiMultimodalLiveVoiceAPI
                                 else -> AppDestination.Dashboard
                             }
                             if (targetDestination != AppDestination.Dashboard) {
@@ -201,6 +207,22 @@ fun AppNavigation(
                 )
                 HuggingFaceVoicePasswordScreen(
                     viewModel = voicePasswordViewModel,
+                    onBackClick = {
+                        if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
+                    }
+                )
+            }
+
+            is AppDestination.SpeechBrainTest -> {
+                SpeechBrainTestDemoScreen(
+                    onBackClick = {
+                        if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
+                    }
+                )
+            }
+
+            is AppDestination.GeminiMultimodalLiveVoiceAPI -> {
+                GeminiMultimodalLiveVoiceDemoScreen(
                     onBackClick = {
                         if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
                     }

@@ -130,6 +130,26 @@ class FeatureRegistryRepositoryImpl : FeatureRegistryRepository {
             color = Color(0xFFE11D48),
             destination = "huggingfacetransformersjsonnxwebruntime_demo",
             tags = listOf("HuggingFace", "Transformers.js", "ONNX", "WebView", "Whisper")
+        ),
+        DemoItem(
+            id = "speechbraintest_demo",
+            title = "SpeechBrainTest",
+            description = "SpeechBrain Google Cloud Speech-to-Text & Password Verification Engine.",
+            category = DemoCategory.UI_COMPONENTS,
+            icon = Icons.Rounded.RecordVoiceOver,
+            color = Color(0xFF0284C7),
+            destination = "speechbraintest_demo",
+            tags = listOf("SpeechBrain", "GoogleCloud", "STT", "Verification", "Voice")
+        ),
+        DemoItem(
+            id = "geminimultimodallivevoiceapi_demo",
+            title = "GeminiMultimodalLiveVoiceAPI",
+            description = "Real-time bidirectional multimodal live voice interaction via Google Gemini WebSocket API.",
+            category = DemoCategory.UI_COMPONENTS,
+            icon = Icons.Rounded.GraphicEq,
+            color = Color(0xFF10B981),
+            destination = "geminimultimodallivevoiceapi_demo",
+            tags = listOf("Gemini", "Multimodal", "Live", "Voice", "WebSocket", "Realtime")
         )
     )
 

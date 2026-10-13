@@ -1,53 +1,27 @@
 # Project Plan
 
-Tích hợp 2 project mới vào AllDemo Hub: RevAIAssemblyAIStreamingWebSocketAPI (tại E:\AndroidStudioCode\RevAIAssemblyAIStreamingWebSocketAPI) và HuggingFaceTransformersjsONNXWebRuntime (tại E:\AndroidStudioCode\HuggingFaceTransformersjsONNXWebRuntime). Đọc mã nguồn các project, đặt tên package khớp chính xác tên project (com.example.alldemo.features.revaiassemblyaistreamingwebsocketapi, com.example.alldemo.features.huggingfacetransformersjsonnxwebruntime), tạo 2 nút/thẻ điều hướng tương ứng trên màn hình chính AllDemo Hub.
+Tích hợp 2 project mới vào AllDemo Hub: SpeechBrainTest (tại E:\AndroidStudioCode\SpeechBrainTest) và GeminiMultimodalLiveVoiceAPI (tại E:\AndroidStudioCode\GeminiMultimodalLiveVoiceAPI). Đọc mã nguồn các project, đặt tên package khớp chính xác tên project (com.example.alldemo.features.speechbraintest, com.example.alldemo.features.geminimultimodallivevoiceapi), tạo 2 nút/thẻ điều hướng tương ứng trên màn hình chính AllDemo Hub.
 
 ## Project Brief
 
-# Project Brief: Tích hợp Module AllDemo Hub
+# Project Brief: AllDemo Hub - Tích hợp SpeechBrain & Gemini Live Voice API
 
-## Mô tả Dự án (Project Overview)
-Dự án nhằm hợp nhất hai module tính năng mới vào ứng dụng **AllDemo Hub**:
-1. **RevAIAssemblyAIStreamingWebSocketAPI**: Xử lý nhận diện giọng nói theo thời gian thực qua giao thức WebSocket với Rev AI và AssemblyAI APIs.
-2. **HuggingFaceTransformersjsONNXWebRuntime**: Chạy các mô hình AI/ML trên thiết bị (On-device) bằng HuggingFace Transformers.js và ONNX Web Runtime.
+## 1. Features (Tính năng chính)
+1. **Trang chủ điều hướng AllDemo Hub**: Màn hình trung tâm hiển thị danh sách các thẻ điều hướng chính, giúp người dùng dễ dàng truy cập vào từng tính năng tích hợp.
+2. **Tính năng SpeechBrain Test (`com.example.alldemo.features.speechbraintest`)**: Màn hình thử nghiệm các tác vụ nhận dạng và xử lý âm thanh/giọng nói dựa trên SpeechBrain.
+3. **Tính năng Gemini Multimodal Live Voice API (`com.example.alldemo.features.geminimultimodallivevoiceapi`)**: Màn hình tương tác giọng nói trực tiếp thời gian thực (Live Voice API) với Gemini AI.
+4. **Điều hướng trạng thái mượt mà (State-Driven Navigation)**: Chuyển đổi liền mạch và linh hoạt giữa Hub chính và các tính năng thử nghiệm.
 
-Mã nguồn được tích hợp vào ứng dụng AllDemo Hub theo đúng cấu trúc package quy định (`com.example.alldemo.features.revaiassemblyaistreamingwebsocketapi` và `com.example.alldemo.features.huggingfacetransformersjsonnxwebruntime`), đi kèm với các thẻ điều hướng tương ứng trên màn hình chính.
-
----
-
-## Các tính năng chính (Features)
-
-1. **Màn hình điều hướng trung tâm AllDemo Hub (Hub Dashboard & Navigation)**
-   - Hiển thị danh sách các module dưới dạng các thẻ (Cards)/nút điều hướng chuẩn Material Design 3.
-   - Cho phép người dùng chuyển đổi linh hoạt giữa các tính năng thử nghiệm.
-
-2. **Module Rev AI & AssemblyAI Streaming WebSocket**
-   - Thu âm micro và truyền luồng dữ liệu âm thanh (audio streaming) liên tục qua WebSocket.
-   - Xử lý và hiển thị kết quả chuyển đổi giọng nói thành văn bản (Speech-to-Text) theo thời gian thực từ Rev AI và AssemblyAI.
-
-3. **Module Hugging Face Transformers.js ONNX Web Runtime**
-   - Thực thi các mô hình AI/ML trực tiếp trên ứng dụng thông qua môi trường Web Runtime tích hợp ONNX Runtime & Transformers.js.
-   - Tương tác dữ liệu hai chiều mượt mà giữa giao diện Jetpack Compose và môi trường chạy mô hình AI.
-
-4. **Quản lý kết nối & Trạng thái thời gian thực (Real-time State Management)**
-   - Quản lý vòng đời kết nối WebSocket (kết nối, ngắt kết nối, tự động xử lý lỗi mạng).
-   - Phản hồi trạng thái xử lý và kết quả lên giao diện người dùng dựa trên Kotlin State & Flow.
-
----
-
-## Công nghệ & Kiến trúc (High-Level Technical Stack)
-
-- **Ngôn ngữ lập trình**: Kotlin
-- **Giao diện người dùng (UI)**: Jetpack Compose, Material Design 3
-- **Điều hướng (Navigation)**: **Jetpack Navigation 3** (State-driven navigation)
-- **Giao diện thích ứng (Adaptive Layout)**: **Compose Material Adaptive** (`androidx.compose.material3.adaptive`)
-- **Bất đồng bộ & Luồng dữ liệu**: Kotlin Coroutines & Flow
-- **Mạng & Truyền dữ liệu thời gian thực**: OkHttp WebSocket Client
-- **Môi trường chạy mô hình AI**: Android WebKit WebView / JavaScript Interface cho ONNX Web Runtime & Transformers.js
-- **Mô hình kiến trúc**: Unidirectional Data Flow (UDF) với ViewModel và Compose State Management
+## 2. High-Level Tech Stack (Công nghệ cốt lõi)
+- **Ngôn ngữ phát triển**: Kotlin
+- **Xây dựng Giao diện (UI)**: Jetpack Compose (Material 3)
+- **Điều hướng (Navigation)**: **Jetpack Navigation 3** (Kiến trúc điều hướng dựa trên trạng thái - State-driven)
+- **Giao diện thích ứng (Adaptive Layout)**: **Compose Material Adaptive Library** (Tương thích đa màn hình: điện thoại, máy tính bảng, màn hình gập)
+- **Xử lý bất đồng bộ & Luồng dữ liệu**: Kotlin Coroutines & Flow (Quản lý luồng âm thanh thời gian thực và các tác vụ bất đồng bộ)
+- **Kiến trúc phần mềm**: MVVM / Unidirectional Data Flow (UDF)
 
 ## Implementation Steps
-**Total Duration:** 1h 40m 27s
+**Total Duration:** 2h 11s
 
 ### Task_1_SetupRegistryAndViewModel: Define the Demo Registry data model, repository, ViewModel with StateFlow, search/filter business logic, and sample demo entries.
 - **Status:** COMPLETED
@@ -190,4 +164,22 @@ Mã nguồn được tích hợp vào ứng dụng AllDemo Hub theo đúng cấu
   - make sure all existing tests pass
   - Both new feature modules (RevAI & HuggingFace ONNX) launch and function without errors
 - **Duration:** 3m 6s
+
+### Task_16_IntegrateSpeechBrainAndGeminiLiveVoiceProjects: Integrate SpeechBrainTest (E:\AndroidStudioCode\SpeechBrainTest) and GeminiMultimodalLiveVoiceAPI (E:\AndroidStudioCode\GeminiMultimodalLiveVoiceAPI) into packages com.example.alldemo.features.speechbraintest and com.example.alldemo.features.geminimultimodallivevoiceapi. Register 1 button per project in FeatureRegistry, update AndroidManifest and build dependencies, and wire AppNavigation.
+- **Status:** COMPLETED
+- **Updates:** Ported SpeechBrainTest into com.example.alldemo.features.speechbraintest and GeminiMultimodalLiveVoiceAPI into com.example.alldemo.features.geminimultimodallivevoiceapi. Registered 2 separate demo buttons in FeatureRegistryRepositoryImpl, connected routes in AppNavigation, verified AndroidManifest permissions, and verified assembleDebug build and testDebugUnitTest unit tests.
+- **Acceptance Criteria:**
+  - SpeechBrainTest and GeminiMultimodalLiveVoiceAPI ported into packages com.example.alldemo.features.speechbraintest and com.example.alldemo.features.geminimultimodallivevoiceapi
+  - 1 button/card per project registered in FeatureRegistry and wired in AppNavigation
+  - Dependencies, manifest permissions, components, and API key configurations updated as required
+- **Duration:** 19m 44s
+
+### Task_17_RunAndVerifySpeechBrainAndGeminiIntegrations: Build and run the app, instruct critic_agent to verify application stability (no crashes), confirm alignment with user requirements for SpeechBrainTest and GeminiMultimodalLiveVoiceAPI integrations, and report critical UI issues.
+- **Status:** IN_PROGRESS
+- **Acceptance Criteria:**
+  - build pass
+  - app does not crash
+  - make sure all existing tests pass
+  - Both new feature modules (SpeechBrain and Gemini Live Voice API) launch and function without errors
+- **StartTime:** 2026-10-13 09:33:05 GMT+07:00
 
