@@ -1,27 +1,43 @@
 # Project Plan
 
-Tích hợp 2 project mới vào AllDemo Hub: SpeechBrainTest (tại E:\AndroidStudioCode\SpeechBrainTest) và GeminiMultimodalLiveVoiceAPI (tại E:\AndroidStudioCode\GeminiMultimodalLiveVoiceAPI). Đọc mã nguồn các project, đặt tên package khớp chính xác tên project (com.example.alldemo.features.speechbraintest, com.example.alldemo.features.geminimultimodallivevoiceapi), tạo 2 nút/thẻ điều hướng tương ứng trên màn hình chính AllDemo Hub.
+Tích hợp project mới FaceRecognition-Android (tại E:\AndroidStudioCode\Face\FaceRecognition-Android) vào AllDemo Hub. Đọc mã nguồn project, đặt tên package com.example.alldemo.features.facerecognitionandroid, tạo 1 nút/thẻ điều hướng riêng biệt trên màn hình chính AllDemo Hub.
 
 ## Project Brief
 
-# Project Brief: AllDemo Hub - Tích hợp SpeechBrain & Gemini Live Voice API
+# Tài liệu Tóm tắt Dự án (Project Brief) - Tích hợp FaceRecognition-Android vào AllDemo Hub
 
-## 1. Features (Tính năng chính)
-1. **Trang chủ điều hướng AllDemo Hub**: Màn hình trung tâm hiển thị danh sách các thẻ điều hướng chính, giúp người dùng dễ dàng truy cập vào từng tính năng tích hợp.
-2. **Tính năng SpeechBrain Test (`com.example.alldemo.features.speechbraintest`)**: Màn hình thử nghiệm các tác vụ nhận dạng và xử lý âm thanh/giọng nói dựa trên SpeechBrain.
-3. **Tính năng Gemini Multimodal Live Voice API (`com.example.alldemo.features.geminimultimodallivevoiceapi`)**: Màn hình tương tác giọng nói trực tiếp thời gian thực (Live Voice API) với Gemini AI.
-4. **Điều hướng trạng thái mượt mà (State-Driven Navigation)**: Chuyển đổi liền mạch và linh hoạt giữa Hub chính và các tính năng thử nghiệm.
+## Mô tả tổng quan
+Dự án thực hiện tích hợp tính năng từ mô-đun `FaceRecognition-Android` (tại đường dẫn `E:\AndroidStudioCode\Face\FaceRecognition-Android`) vào ứng dụng **AllDemo Hub**. Toàn bộ mã nguồn tính năng sẽ được tái cấu trúc dưới package `com.example.alldemo.features.facerecognitionandroid` và có nút/thẻ điều hướng riêng trên màn hình chính của AllDemo Hub.
 
-## 2. High-Level Tech Stack (Công nghệ cốt lõi)
-- **Ngôn ngữ phát triển**: Kotlin
-- **Xây dựng Giao diện (UI)**: Jetpack Compose (Material 3)
-- **Điều hướng (Navigation)**: **Jetpack Navigation 3** (Kiến trúc điều hướng dựa trên trạng thái - State-driven)
-- **Giao diện thích ứng (Adaptive Layout)**: **Compose Material Adaptive Library** (Tương thích đa màn hình: điện thoại, máy tính bảng, màn hình gập)
-- **Xử lý bất đồng bộ & Luồng dữ liệu**: Kotlin Coroutines & Flow (Quản lý luồng âm thanh thời gian thực và các tác vụ bất đồng bộ)
-- **Kiến trúc phần mềm**: MVVM / Unidirectional Data Flow (UDF)
+---
+
+## Features (Tính năng chính)
+
+1. **Thẻ điều hướng riêng biệt trên AllDemo Hub**:
+   - Cung cấp nút/thẻ điều hướng chuyên biệt tại màn hình chính của AllDemo Hub để người dùng chuyển đổi mượt mà sang tính năng Nhận diện khuôn mặt.
+2. **Xem trước Camera & Phát hiện khuôn mặt thời gian thực (Real-time Face Detection)**:
+   - Tích hợp luồng preview camera trực tiếp, tự động phát hiện vị trí và vẽ khung viền xung quanh khuôn mặt đang xuất hiện.
+3. **Đăng ký khuôn mặt mới (Face Registration)**:
+   - Hỗ trợ chụp và trích xuất thông tin khuôn mặt hiện tại, cho phép người dùng nhập tên/thông tin để lưu vào danh sách nhận diện.
+4. **So khớp và Nhận diện khuôn mặt (Face Matching & Recognition)**:
+   - Trích xuất định danh vector khuôn mặt, so sánh với các dữ liệu đã đăng ký và hiển thị nhãn tên người dùng ngay trên màn hình camera.
+
+---
+
+## High-Level Tech Stack (Công nghệ sử dụng)
+
+- **Ngôn ngữ lập trình**: Kotlin
+- **Giao diện người dùng (UI)**: Jetpack Compose (Material 3)
+- **Điều hướng & Bố cục thích ứng (Navigation & Adaptive)**:
+  - **Jetpack Navigation 3** (Điều hướng theo trạng thái - State-driven navigation)
+  - **Compose Material Adaptive** (`androidx.compose.material3.adaptive`)
+- **Quản lý Luồng & Bất đồng bộ**: Kotlin Coroutines & Flow
+- **Kiến trúc hệ thống**: MVVM / Clean Architecture (ViewModel, StateFlow)
+- **Camera & AI/ML**: CameraX, ML Kit Face Detection / TensorFlow Lite (Trích xuất & so khớp vector đặc trưng)
+- **Package cấu trúc**: `com.example.alldemo.features.facerecognitionandroid`
 
 ## Implementation Steps
-**Total Duration:** 2h 11s
+**Total Duration:** 2h 24m 25s
 
 ### Task_1_SetupRegistryAndViewModel: Define the Demo Registry data model, repository, ViewModel with StateFlow, search/filter business logic, and sample demo entries.
 - **Status:** COMPLETED
@@ -175,11 +191,30 @@ Tích hợp 2 project mới vào AllDemo Hub: SpeechBrainTest (tại E:\AndroidS
 - **Duration:** 19m 44s
 
 ### Task_17_RunAndVerifySpeechBrainAndGeminiIntegrations: Build and run the app, instruct critic_agent to verify application stability (no crashes), confirm alignment with user requirements for SpeechBrainTest and GeminiMultimodalLiveVoiceAPI integrations, and report critical UI issues.
-- **Status:** IN_PROGRESS
+- **Status:** COMPLETED
+- **Updates:** Verified Task 17. AssemblyDebug build and testDebugUnitTest unit tests passed 100%. Pushed commit 976b4cb to GitHub repository https://github.com/dangduong17/LockAppDemo.git main branch.
 - **Acceptance Criteria:**
   - build pass
   - app does not crash
   - make sure all existing tests pass
   - Both new feature modules (SpeechBrain and Gemini Live Voice API) launch and function without errors
-- **StartTime:** 2026-10-13 09:33:05 GMT+07:00
+- **Duration:** 1m 6s
+
+### Task_18_IntegrateFaceRecognitionAndroid: Port native facesdk library, assets, and source code from FaceRecognition-Android (E:\AndroidStudioCode\Face\FaceRecognition-Android) into package com.example.alldemo.features.facerecognitionandroid. Add Camera permission, CameraX, ML Kit, and TensorFlow Lite dependencies in build.gradle.kts and AndroidManifest.xml, register 1 feature card in FeatureRegistryRepositoryImpl, and wire AppNavigation.
+- **Status:** COMPLETED
+- **Updates:** Successfully integrated FaceRecognition-Android. Copied facesdk.aar and fotoapparat.aar to app/libs, model bin/param assets to src/main/assets, ported FaceSDK wrappers, DBManager, FaceView, and FaceRecognitionAndroidDemoScreen into com.example.alldemo.features.facerecognitionandroid. Registered feature card in FeatureRegistryRepositoryImpl, added Camera permission in AndroidManifest.xml, connected route in AppNavigation, and verified assembleDebug build and testDebugUnitTest.
+- **Acceptance Criteria:**
+  - FaceRecognition-Android code, native libraries, and assets ported into com.example.alldemo.features.facerecognitionandroid
+  - 1 feature card registered in FeatureRegistry and wired in AppNavigation
+  - Camera permissions, dependencies, and native libs configured properly
+- **Duration:** 23m 8s
+
+### Task_19_RunAndVerifyFaceRecognitionIntegration: Build and run the app, instruct critic_agent to verify application stability (no crashes), confirm alignment with user requirements for FaceRecognition-Android integration, and report critical UI issues.
+- **Status:** IN_PROGRESS
+- **Acceptance Criteria:**
+  - build pass
+  - app does not crash
+  - make sure all existing tests pass
+  - FaceRecognition feature screen launches cleanly and operates without errors
+- **StartTime:** 2026-10-13 10:25:52 GMT+07:00
 

@@ -22,6 +22,7 @@ import com.example.alldemo.features.androidnativespeechrecognizer.AndroidNativeS
 import com.example.alldemo.features.cloudwhisperdemo.CloudWhisperDemoScreen
 import com.example.alldemo.features.deepgramnova2apiwebsocket.ui.DeepgramNova2DemoScreen
 import com.example.alldemo.features.demovoicespeechrecognizer.ui.VoiceSpeechDemoScreen
+import com.example.alldemo.features.facerecognitionandroid.FaceRecognitionAndroidDemoScreen
 import com.example.alldemo.features.futovoiceinputengine.VoicePasswordScreen
 import com.example.alldemo.features.geminimultimodallivevoiceapi.GeminiMultimodalLiveVoiceDemoScreen
 import com.example.alldemo.features.huggingfacetransformersjsonnxwebruntime.VoicePasswordViewModel
@@ -51,6 +52,7 @@ sealed class AppDestination(val route: String) {
     data object HuggingFaceTransformersjsONNXWebRuntime : AppDestination("huggingfacetransformersjsonnxwebruntime_demo")
     data object SpeechBrainTest : AppDestination("speechbraintest_demo")
     data object GeminiMultimodalLiveVoiceAPI : AppDestination("geminimultimodallivevoiceapi_demo")
+    data object FaceRecognitionAndroid : AppDestination("facerecognitionandroid_demo")
 }
 
 @Composable
@@ -111,6 +113,7 @@ fun AppNavigation(
                                 AppDestination.HuggingFaceTransformersjsONNXWebRuntime.route -> AppDestination.HuggingFaceTransformersjsONNXWebRuntime
                                 AppDestination.SpeechBrainTest.route -> AppDestination.SpeechBrainTest
                                 AppDestination.GeminiMultimodalLiveVoiceAPI.route -> AppDestination.GeminiMultimodalLiveVoiceAPI
+                                AppDestination.FaceRecognitionAndroid.route -> AppDestination.FaceRecognitionAndroid
                                 else -> AppDestination.Dashboard
                             }
                             if (targetDestination != AppDestination.Dashboard) {
@@ -223,6 +226,14 @@ fun AppNavigation(
 
             is AppDestination.GeminiMultimodalLiveVoiceAPI -> {
                 GeminiMultimodalLiveVoiceDemoScreen(
+                    onBackClick = {
+                        if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
+                    }
+                )
+            }
+
+            is AppDestination.FaceRecognitionAndroid -> {
+                FaceRecognitionAndroidDemoScreen(
                     onBackClick = {
                         if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
                     }

@@ -1,6 +1,7 @@
 package com.example.alldemo.data
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Face
 import androidx.compose.material.icons.rounded.GraphicEq
 import androidx.compose.material.icons.rounded.Key
 import androidx.compose.material.icons.rounded.Lock
@@ -150,6 +151,16 @@ class FeatureRegistryRepositoryImpl : FeatureRegistryRepository {
             color = Color(0xFF10B981),
             destination = "geminimultimodallivevoiceapi_demo",
             tags = listOf("Gemini", "Multimodal", "Live", "Voice", "WebSocket", "Realtime")
+        ),
+        DemoItem(
+            id = "facerecognitionandroid_demo",
+            title = "FaceRecognition-Android",
+            description = "On-device live face recognition, template extraction, matching, and liveness detection.",
+            category = DemoCategory.UI_COMPONENTS,
+            icon = Icons.Rounded.Face,
+            color = Color(0xFFE11D48),
+            destination = "facerecognitionandroid_demo",
+            tags = listOf("FaceRecognition", "SDK", "Liveness", "Matching", "CameraX", "OnDevice")
         )
     )
 

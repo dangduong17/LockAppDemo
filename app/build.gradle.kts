@@ -29,7 +29,7 @@ android {
         }
     }
     androidResources {
-        noCompress += listOf("mdl", "fst", "pat", "mfcc", "mat", "txt", "bytes", "conf", "ie", "dubm", "stats", "int", "uuid")
+        noCompress += listOf("mdl", "fst", "pat", "mfcc", "mat", "txt", "bytes", "conf", "ie", "dubm", "stats", "int", "uuid", "bin", "param")
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -81,6 +81,8 @@ dependencies {
     implementation(libs.retrofit)
     implementation("net.java.dev.jna:jna:5.13.0@aar")
     implementation("com.alphacephei:vosk-android:0.3.32@aar")
+    implementation("androidx.preference:preference-ktx:1.2.1")
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar", "*.jar"))))
     testImplementation(libs.androidx.core)
     testImplementation(libs.androidx.junit)
     testImplementation(libs.junit)
