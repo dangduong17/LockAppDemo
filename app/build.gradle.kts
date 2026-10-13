@@ -12,7 +12,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.alldemo"
+        applicationId = "com.kbyai.facerecognition"
         minSdk = 25
         targetSdk = 37
         versionCode = 1
